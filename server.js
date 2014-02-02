@@ -16,7 +16,18 @@
 
 	// listen (start app with node server.js) ======================================
 	
-	var Todo=mongoose.model('Todo',{text:String});
+	var Todo=mongoose.model('Todo',{
+			text:String,
+			size:Number,
+			date:Date,
+			address: {
+				street: String,
+				streetNumber:Number,
+				postCode: String,
+				country: String 
+			}
+
+		});
 
 	//api
 	app.get('/api/todos', function(req,res){
@@ -31,6 +42,14 @@
 	app.post('/api/todos', function(req,res){
 		Todo.create({
 			text: req.body.text,
+			size: req.body.size,
+			date: new Date(),
+			address: {
+				street: "Claremont Road",
+				streetNumber: 39,
+				postCode: "E14 8QE",
+				country: "UK"
+			},
 			done: false
 		}, function(err,todo){
 			if(err)
